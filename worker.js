@@ -18,10 +18,14 @@ function writeFileAsync(filePath, data) {
 parentPort.on('message', async (data) => {
     try {
         // Perform file writing asynchronously
-        await writeFileAsync("./message.txt", data);
+        console.log("Wait for three seconds");
+        setTimeout(async () => {
+            await writeFileAsync("./message.txt", data);
 
-        // Notify the main thread about the completion
-        parentPort.postMessage('File writing completed successfully!');
+            // Notify the main thread about the completion
+            parentPort.postMessage('File writing completed successfully!');
+        }, 3000);
+
     } catch (error) {
         // Notify the main thread about the error
         parentPort.postMessage(`File writing failed: ${error.message}`);
